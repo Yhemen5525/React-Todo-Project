@@ -1,14 +1,31 @@
 import React from "react";
 
-const Form = function ({ setInputText }) {
+const Form = function ({ inputText, setInputText, todos, setTodos }) {
   const textInputHandler = function (e) {
     setInputText(e.target.value);
   };
 
+  const submitTodoHandler = function (e) {
+    e.preventDefault();
+
+    setTodos([
+      ...todos,
+      { text: inputText, completed: false, id: Math.random() * 1000 }
+    ]);
+
+    //empty text after sumbit - fix problem later
+    setInputText("");
+  };
+
   return (
     <form>
-      <input onChange={textInputHandler} type="text" className="todo-input" />
-      <button className="todo-button" type="submit">
+      <input
+        value={inputText}
+        onChange={textInputHandler}
+        type="text"
+        className="todo-input"
+      />
+      <button onClick={submitTodoHandler} className="todo-button" type="submit">
         <i className="fas fa-plus-square"></i>
       </button>
       <div className="select">
